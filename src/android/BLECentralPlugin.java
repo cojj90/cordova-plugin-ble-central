@@ -120,6 +120,7 @@ public class BLECentralPlugin extends CordovaPlugin implements BluetoothAdapter.
         LOG.d(TAG, "action = " + action);
 
         if (bluetoothAdapter == null) {
+
             final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
             bluetoothAdapter = bluetoothManager.getAdapter();
         }
