@@ -128,14 +128,11 @@ public class BLECentralPlugin extends CordovaPlugin implements BluetoothAdapter.
             BluetoothManager bluetoothManager = (BluetoothManager) this.context
                     .getSystemService(Context.BLUETOOTH_SERVICE);
             this.bluetoothAdapter = bluetoothManager.getAdapter();
-        } else {
-            Log.w(TAG, "BLE ADAPTOR NOT NULL");
         }
 
         boolean validAction = true;
 
         cordova.getThreadPool().execute(new Runnable() {
-            @Override
             public void run() {
                 try {
                     if (action.equals(SCAN)) {
@@ -283,6 +280,7 @@ public class BLECentralPlugin extends CordovaPlugin implements BluetoothAdapter.
                     //return validAction;
                 } catch (JSONException e) {
                     Log.e("ERROR: ", "YOYOYO");
+                    callbackContext.error("FAILED");
                 }
             }
         });
@@ -354,6 +352,7 @@ public class BLECentralPlugin extends CordovaPlugin implements BluetoothAdapter.
         if (peripheral != null) {
             peripheral.connect(callbackContext, cordova.getActivity());
         } else {
+            Log.w("BLE:", "Peripheral " + macAddress + " not found.");
             callbackContext.error("Peripheral " + macAddress + " not found.");
         }
 
