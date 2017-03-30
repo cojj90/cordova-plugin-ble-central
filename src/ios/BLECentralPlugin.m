@@ -41,7 +41,6 @@
     peripherals = [NSMutableSet set];
     manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
 
-    bobbyCallbackId; = [NSMutableDictionary new];
     connectCallbacks = [NSMutableDictionary new];
     connectCallbackLatches = [NSMutableDictionary new];
     readCallbacks = [NSMutableDictionary new];
@@ -63,7 +62,7 @@
 
 - (void)bobby:(CDVInvokedUrlCommand *)command {
         NSLog(@"connect");
-        [bobbyCallbackId setObject:[command.callbackId copy]];
+        bobbyCallbackId = [command.callbackId copy];
   }
 
 - (void)connect:(CDVInvokedUrlCommand *)command {
@@ -424,8 +423,8 @@
         NSString *state = [bluetoothStates objectForKey:@(central.state)];
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:state];
         [pluginResult setKeepCallbackAsBool:TRUE];
-        NSLog(@"Report Bluetooth state \"%@\" on callback %@", state, stateCallbackId);
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:stateCallbackId];
+        NSLog(@"Report Bluetooth state \"%@\" on callback %@", state, bobbyCallbackId);
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:bobbyCallbackId];
     }
 
     if (stateCallbackId != nil) {
