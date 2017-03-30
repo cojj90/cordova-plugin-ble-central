@@ -25,6 +25,7 @@
 #import "CBPeripheral+Extensions.h"
 
 @interface BLECentralPlugin : CDVPlugin <CBCentralManagerDelegate, CBPeripheralDelegate> {
+    NSString* bobbyCallbackId;
     NSString* discoverPeripherialCallbackId;
     NSString* stateCallbackId;
     NSMutableDictionary* connectCallbacks;
@@ -63,6 +64,8 @@
 - (void)onReset;
 
 - (void)readRSSI:(CDVInvokedUrlCommand *)command;
+
+- (void)bobby:(CDVInvokedUrlCommand *)command;
 
 @end
 

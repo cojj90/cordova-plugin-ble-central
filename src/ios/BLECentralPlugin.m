@@ -41,6 +41,7 @@
     peripherals = [NSMutableSet set];
     manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
 
+    bobbyCallbackId; = [NSMutableDictionary new];
     connectCallbacks = [NSMutableDictionary new];
     connectCallbackLatches = [NSMutableDictionary new];
     readCallbacks = [NSMutableDictionary new];
@@ -59,6 +60,11 @@
 }
 
 #pragma mark - Cordova Plugin Methods
+
+- (void)bobby:(CDVInvokedUrlCommand *)command {
+        NSLog(@"connect");
+        [bobbyCallbackId setObject:[command.callbackId copy]];
+  }
 
 - (void)connect:(CDVInvokedUrlCommand *)command {
 
@@ -411,6 +417,15 @@
         NSLog(@"=============================================================");
         NSLog(@"WARNING: This hardware does not support Bluetooth Low Energy.");
         NSLog(@"=============================================================");
+    }
+
+     if (bobbyCallbackId != nil) {
+        CDVPluginResult *pluginResult = nil;
+        NSString *state = [bluetoothStates objectForKey:@(central.state)];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:state];
+        [pluginResult setKeepCallbackAsBool:TRUE];
+        NSLog(@"Report Bluetooth state \"%@\" on callback %@", state, stateCallbackId);
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:stateCallbackId];
     }
 
     if (stateCallbackId != nil) {
