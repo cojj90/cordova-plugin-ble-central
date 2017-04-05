@@ -29,11 +29,11 @@
             </feature>
         </config-file>
 
-        <config-file parent="UIBackgroundModes" target="*-Info.plist">
+        <!--<config-file parent="UIBackgroundModes" target="*-Info.plist">
             <array>
                 <string>bluetooth-central</string>
             </array>
-        </config-file>
+        </config-file>-->
 
         <header-file src="src/ios/BLECentralPlugin.h" target-dir="BLECentralPlugin" />
         <source-file src="src/ios/BLECentralPlugin.m" target-dir="BLECentralPlugin" />
